@@ -33,12 +33,12 @@ class Calculadora(private val ui: IEntradaSalida) {
                 ui.mostrar("Resultado: %.2f".format(resultado))
 
             } catch(e: Exception) {
-                ui.mostrarError(e.message ?: "Se ha producido un error!")
+                ui.mostrarError(e.message ?: "Se ha producido un error!",true)
             } catch (e : NumberFormatException){
                 ui.mostrarError(e.message ?: "Por favor,Introduce un numero !",true)
             } catch (e : ArithmeticException){
             ui.mostrarError(e.message ?: "No se puede dividir entre 0 !",true)
-        }
+            }
         } while (ui.preguntar())
         ui.limpiarPantalla()
     }

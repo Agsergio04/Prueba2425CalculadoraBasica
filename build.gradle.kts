@@ -1,5 +1,8 @@
 plugins {
     kotlin("jvm") version "2.0.21"
+    application
+    id("com.github.johnrengelman.shadow") version "8.1.1"
+
 }
 
 group = "org.example"
@@ -7,6 +10,10 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
+}
+
+application {
+    mainClass.set("CalcBasica.MainKt")
 }
 
 dependencies {
@@ -18,4 +25,12 @@ tasks.test {
 }
 kotlin {
     jvmToolchain(21)
+}
+
+tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
+    archiveBaseName.set("CalcBasica")    // Nombre personalizado
+    archiveVersion.set("1.0")                // Versión
+    archiveClassifier.set("")                // Sin sufijo -all
+    mergeServiceFiles()
+    exclude("META-INF/*.SF", "META-INF/*.DSA", "META-INF/*.RSA") // Evita errores de firma
 }

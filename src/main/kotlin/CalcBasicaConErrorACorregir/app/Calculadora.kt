@@ -2,9 +2,13 @@ package CalcBasicaConErrorACorregir.app
 
 import CalcBasicaConErrorACorregir.ui.IEntradaSalida
 import CalcBasicaConErrorACorregir.model.Operadores
+import org.example.CalcBasicaConErrorACorregir.utils.Clases.Log
 import kotlin.text.format
 
-class Calculadora(private val ui: IEntradaSalida) {
+class Calculadora(
+    private val ui: IEntradaSalida,
+    private val log : Log
+) {
 
     private fun pedirNumero(msj: String, msjError: String = "Número no válido!"): Double {
         return ui.pedirDouble(msj) ?: throw InfoCalcException(msjError)
@@ -31,6 +35,7 @@ class Calculadora(private val ui: IEntradaSalida) {
                 val (numero1, operador, numero2) = pedirInfo()
                 val resultado = realizarCalculo(numero1, operador, numero2)
                 ui.mostrar("Resultado: %.2f".format(resultado))
+                log.registrarOperacion("$numero1 ${operador.simbolos.first()} $numero2 = $resultado")
 
             } catch(e: Exception) {
                 ui.mostrarError(e.message ?: "Se ha producido un error!",true)
@@ -38,6 +43,30 @@ class Calculadora(private val ui: IEntradaSalida) {
                 ui.mostrarError(e.message ?: "Por favor,Introduce un numero !",true)
             } catch (e : ArithmeticException){
             ui.mostrarError(e.message ?: "No se puede dividir entre 0 !",true)
+            }
+        } while (ui.preguntar())
+        ui.limpiarPantalla()
+    }
+
+    fun iniciarLog(){
+        do {
+            try {
+
+
+                ui.limpiarPantalla()
+                val (numero1, operador, numero2) = pedirInfo()
+                val resultado = realizarCalculo(numero1, operador, numero2)
+                ui.mostrar("Resultado: %.2f".format(resultado))
+
+
+                log.registrarOperacion("$numero1 ${operador.simbolos.first()} $numero2 = $resultado")
+
+            } catch(e: Exception) {
+                ui.mostrarError(e.message ?: "Se ha producido un error!",true)
+            } catch (e : NumberFormatException){
+                ui.mostrarError(e.message ?: "Por favor,Introduce un numero !",true)
+            } catch (e : ArithmeticException){
+                ui.mostrarError(e.message ?: "No se puede dividir entre 0 !",true)
             }
         } while (ui.preguntar())
         ui.limpiarPantalla()

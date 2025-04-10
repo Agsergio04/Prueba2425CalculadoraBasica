@@ -13,7 +13,7 @@ repositories {
 }
 
 application {
-    mainClass.set("CalcBasica.MainKt")
+    mainClass.set("org.example.MainKt")
 }
 
 dependencies {

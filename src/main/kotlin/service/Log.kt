@@ -1,13 +1,14 @@
-package org.example.utils
+package org.example.service
 
-import org.example.utils.UILog
+import org.example.utils.Fichero
+import org.example.utils.IUtilFicheros
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class Log(private val fichero: Fichero) : UILog {
+class Log(private val fichero: IUtilFicheros) : UILog {
     private val dateFormat = DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
 
-    //Crear carpeta con mkdirs()
+    override val rutaArchivo: String = "C:\\Users\\sergi\\Desktop\\Trabajo\\fp\\Primero\\Programacion\\kotlin\\aaa\\Ejercicios Para exponer\\CalcBasica\\log"
 
     override fun registrarOperacion(mensaje: String)  {
         val linea = "${LocalDateTime.now()}"

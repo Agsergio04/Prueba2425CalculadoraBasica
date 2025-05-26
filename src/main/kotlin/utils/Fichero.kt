@@ -53,4 +53,9 @@ class Fichero : IUtilFicheros {
         val archivo = File(ruta)
         return archivo.exists() && archivo.isDirectory
     }
+
+    override fun crearRuta(ruta: String): Boolean {
+        val dir = File(ruta)
+        return if (!dir.exists()) dir.mkdirs() else false
+    }
 }

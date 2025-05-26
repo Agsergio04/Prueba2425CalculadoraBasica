@@ -32,65 +32,77 @@ class Calculadora(
             Operadores.DIVISION -> numero1 / numero2
         }
 
-    fun iniciar() {
-        do {
-            try {
-                ui.limpiarPantalla()
-                val (numero1, operador, numero2) = pedirInfo()
-                val resultado = realizarCalculo(numero1, operador, numero2)
-                ui.mostrar("Resultado: %.2f".format(resultado))
+    fun iniciarLog(args: Array<String>) {
+        if (!procesarArgumentos(args)) return
 
-            } catch(e: Exception) {
-                ui.mostrarError(e.message ?: "Se ha producido un error!",true)
-            } catch (e : NumberFormatException){
-                ui.mostrarError(e.message ?: "Por favor,Introduce un numero !",true)
-            } catch (e : ArithmeticException){
-            ui.mostrarError(e.message ?: "No se puede dividir entre 0 !",true)
-            }
-        } while (ui.preguntar())
+        ui.mostrar("Presione Enter para continuar...")
+        ui.pedirInfo("")
         ui.limpiarPantalla()
-    }
 
-    fun iniciarLog(lista : Array<String>){
-        // val ruta : File = File("./Log")ee
         do {
             try {
-
-
-                ui.limpiarPantalla()
                 val (numero1, operador, numero2) = pedirInfo()
                 val resultado = realizarCalculo(numero1, operador, numero2)
-                ui.mostrar("Resultado: %.2f".format(resultado))
-
-
+                ui.mostrar("$numero1 ${operador.simbolos.first()} $numero2 = $resultado")
                 log.registrarOperacion("$numero1 ${operador.simbolos.first()} $numero2 = $resultado")
-
-            } catch(e: Exception) {
-                ui.mostrarError(e.message ?: "Se ha producido un error!",true)
-            } catch (e : NumberFormatException){
-                ui.mostrarError(e.message ?: "Por favor,Introduce un numero !",true)
-            } catch (e : ArithmeticException){
-                ui.mostrarError(e.message ?: "No se puede dividir entre 0 !",true)
+            } catch (e: Exception) {
+                ui.mostrarError("Error en argumentos: ${e.message}")
             }
         } while (ui.preguntar())
-        ui.limpiarPantalla()
     }
 
     private fun procesarArgumentos(args: Array<String>): Boolean {
-        val ruta = when (args.size) {
-            0 -> RUTA_POR_DEFECTO
-            1, 4 -> args[0]
+        return when (args.size) {
+            0 -> manejarCasoSinArgumentos()
+            1 -> manejarUnArgumento(args[0])
+            4 -> manejarCuatroArgumentos(args)
             else -> {
                 ui.mostrarError("Número de argumentos inválido. Esperado: 0, 1 o 4.")
-                return false
+                false
             }
         }
+    }
 
-        if (log.crearLog(ruta)) {
-            ui.mostrar("Ruta $ruta creada")
+    private fun manejarCuatroArgumentos(args: Array<String>): Boolean {
+        val ruta = args[0]
+        log.rutaArchivo = ruta
+
+        try {
+            val num1 = args[1].toDouble()
+            val operador = Operadores.getOperador(args[2].firstOrNull())
+                ?: throw InfoCalcException("Operador inválido")
+            val num2 = args[3].toDouble()
+
+            val resultado = realizarCalculo(num1, operador, num2)
+            ui.mostrar("Resultado: ${"%.2f".format(resultado)}")
+            log.registrarOperacion("$num1 ${operador.simbolos.first()} $num2 = $resultado")
+            return true
+        } catch (e: Exception) {
+            ui.mostrarError("Error en argumentos: ${e.message}")
+            return false
         }
+    }
 
+    private fun manejarCasoSinArgumentos(): Boolean {
+        log.rutaArchivo = RUTA_POR_DEFECTO
+        mostrarLogsExistentes()
         return true
+    }
+
+    private fun manejarUnArgumento(ruta: String): Boolean {
+        log.rutaArchivo = ruta
+        mostrarLogsExistentes()
+        return true
+    }
+
+    private fun mostrarLogsExistentes() {
+        val logReciente = log.obtenerLogMasReciente()
+        if (logReciente != null) {
+            ui.mostrar("\n--- Log más reciente ---")
+            log.abrir(logReciente).forEach { ui.mostrar(it) }
+        } else {
+            ui.mostrar("No existen ficheros de Log")
+        }
     }
 
 

@@ -1,5 +1,7 @@
 package org.example.utils
 
+import java.io.File
+
 interface IUtilFicheros {
 
 
@@ -9,4 +11,5 @@ interface IUtilFicheros {
     fun existeFichero(ruta: String): Boolean
     fun existeDirectorio(ruta: String): Boolean
     fun crearRuta(ruta : String) : Boolean
+    fun listarArchivos(ruta: String): List<File>
 }

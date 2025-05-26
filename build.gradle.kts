@@ -1,24 +1,24 @@
 plugins {
-    kotlin("jvm") version "2.0.21"
+    kotlin("jvm") version "2.0.20"
     application
     id("com.github.johnrengelman.shadow") version "8.1.1"
-
 }
 
-group = "org.example"
+application {
+    mainClass.set("es.prog2425.segurosalquiler.MainKt")
+}
+
+group = "es.prog2425.taskmanager"
 version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
 }
 
-application {
-    mainClass.set("org.example.MainKt")
-}
-
 dependencies {
     testImplementation(kotlin("test"))
-    implementation(kotlin("stdlib-jdk8"))
+    implementation("at.favre.lib:bcrypt:0.9.0")
+    implementation("org.jline:jline:3.29.0")
 }
 
 tasks.test {
@@ -26,13 +26,13 @@ tasks.test {
 }
 kotlin {
     jvmToolchain(21)
-    jvmToolchain(8)
 }
 
 tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
-    archiveBaseName.set("CalcBasica")    // Nombre personalizado
-    archiveVersion.set("1.0")                // Versión
-    archiveClassifier.set("")                // Sin sufijo -all
+    archiveBaseName.set("CalcBasica") // Nombre del jar final
+    archiveVersion.set("1.0")
+    archiveClassifier.set("")
+
     mergeServiceFiles()
     exclude("META-INF/*.SF", "META-INF/*.DSA", "META-INF/*.RSA") // Evita errores de firma
 }

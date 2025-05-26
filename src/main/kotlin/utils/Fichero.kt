@@ -58,4 +58,8 @@ class Fichero : IUtilFicheros {
         val dir = File(ruta)
         return if (!dir.exists()) dir.mkdirs() else false
     }
+
+    override fun listarArchivos(ruta: String): List<File> {
+        return File(ruta).listFiles()?.toList() ?: emptyList()
+    }
 }

@@ -3,7 +3,7 @@ package CalcBasicaConErrorACorregir.model
 enum class Operadores(val simbolos: List<Char>) {
     SUMA(listOf('+')),
     RESTA(listOf('-')),
-    MULTIPLICACION(listOf('x')),
+    MULTIPLICACION(listOf('x','*')),
     DIVISION(listOf(':', '/'));
 
     companion object {

@@ -1,0 +1,6 @@
+Para los 4 valores por ejemplo en este repositorio
+
+En cosola ejecuta :
+
+java -jar build/libs/CalcBasica-1.0.jar ./log 11 x 11
+

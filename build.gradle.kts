@@ -31,7 +31,7 @@ tasks.test {
 }
 
 tasks.shadowJar {
-    archiveBaseName.set("CalcBasica")
+    archiveBaseName.set("CalcBasica") // Nombre correcto
     archiveVersion.set("1.0")
     archiveClassifier.set("")
     manifest {

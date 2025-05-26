@@ -1,7 +1,7 @@
-package org.example.CalcBasicaConErrorACorregir.utils.Clases
+package org.example.utils
 
 import CalcBasicaConErrorACorregir.ui.Consola
-import org.example.CalcBasicaConErrorACorregir.utils.Interfaces.IUtilFicheros
+import org.example.utils.IUtilFicheros
 import java.io.File
 import java.io.IOException
 

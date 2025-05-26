@@ -18,6 +18,7 @@ application {
 
 dependencies {
     testImplementation(kotlin("test"))
+    implementation(kotlin("stdlib-jdk8"))
 }
 
 tasks.test {
@@ -25,6 +26,7 @@ tasks.test {
 }
 kotlin {
     jvmToolchain(21)
+    jvmToolchain(8)
 }
 
 tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {

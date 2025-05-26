@@ -1,29 +1,30 @@
-package org.example.CalcBasicaConErrorACorregir.utils.Clases
+package org.example.utils
 
-import org.example.CalcBasicaConErrorACorregir.utils.Interfaces.UILog
+import org.example.utils.UILog
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class Log(private val fichero: Fichero) : UILog {
     private val dateFormat = DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
 
-    override fun registrarOperacion(mensaje: String, error: Boolean) {
-        val linea : String
+    //Crear carpeta con mkdirs()
 
+    override fun registrarOperacion(mensaje: String)  {
+        val linea = "${LocalDateTime.now()}"
         val fechaHora = LocalDateTime.now().format(dateFormat)
         val archivo = "log$fechaHora.txt"
-
-        if (error){
-            linea = "${LocalDateTime.now()} - ${"\"No existen ficheros de Log\"\n"}: $mensaje"
-        } else {
-            linea = "${LocalDateTime.now()}"
-        }
 
         fichero.agregarLinea(archivo, linea)
     }
 
-    override fun crearLog(rutaArchivo: String,mensaje : List<String>): Boolean {
-        return fichero.escribirArchivo(rutaArchivo,mensaje)
+    /*fun agregarOperacion(ruta: String, linea: String): Boolean {
+        return fichero.agregarLinea(ruta,linea)
+        //el .let si la ruta no es nula ejecuta el {} ?: false
+        .lastModify()
+    }*/
+
+    override fun crearLog(rutaArchivo: String) {
+        fichero
     }
 
     override fun buscar(rutaArchivo: String): Boolean{
@@ -35,4 +36,8 @@ class Log(private val fichero: Fichero) : UILog {
     }
 
 
+    /*
+    * Filtrar primero si empieza por "log...txt"
+    * funcion que solo le paso la ruta y otra que
+    * */
 }

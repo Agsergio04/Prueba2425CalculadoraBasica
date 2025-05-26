@@ -1,4 +1,4 @@
-package org.example.CalcBasicaConErrorACorregir.utils.Interfaces
+package org.example.utils
 
 interface IUtilFicheros {
     fun leerArchivo(ruta: String): List<String>

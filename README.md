@@ -9,7 +9,7 @@ Corrige el programa de la carpeta `CalcBasicaConErrorACorregir` para que funcion
 
 1. Crea tu propio proyecto (Gradle) y copia el código de la carpeta anterior.
 2. Crea también un repositorio **PÚBLICO** y agrega el enlace a continuación:
-   * `Edita este fichero y pega a continuación el enlace a tu repo` -> 
+   * `Edita este fichero y pega a continuación el enlace a tu repo` -> https://github.com/Agsergio04/Prueba2425CalculadoraBasica
 4. Ejecuta el programa y observa el error que se produce.
 5. Depura el programa para encontrar el problema.
 6. Dale una solución para que ejecute de forma correcta y comprueba que funciona como se pedía originalmente la práctica `CalcBasica`.
